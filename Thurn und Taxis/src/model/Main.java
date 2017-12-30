@@ -9,5 +9,7 @@ public class Main {
 		System.out.println(vaer);
 
 		Stadt hi = new Stadt();
+
+		System.out.println(hi.toString());
 	}
 }
