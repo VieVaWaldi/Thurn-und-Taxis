@@ -7,6 +7,7 @@ public class Controller {
 	Controller(int c) {
 		this.c = c;
 		System.out.println("hi");
+		System.out.println("hi");
 	}
 
 }
