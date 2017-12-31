@@ -9,13 +9,30 @@ package model;
 public class Stadt {
 
 	private String name;
+	private Provinz provinz;		// Ist n String weils einfacher ist. Evtl fixe ich das mal
 	private int id;
-	private Provinz provinz;
 	
-	Stadt( String name, int id, Provinz provinz) {
+	/**
+	 * @param name der Stadt
+	 * @param provinz der Stadt
+	 * @param id der Stadt
+	 */
+	Stadt( String name, Provinz provinz, int id) {
 		this.name = name;
-		this.id = id;
 		this.provinz = provinz;
+		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public Provinz getProvinz() {
+		return provinz;
+	}
+	
+	public int getID() {
+		return id;
 	}
 	
 }

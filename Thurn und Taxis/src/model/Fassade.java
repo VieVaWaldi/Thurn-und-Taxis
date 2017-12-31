@@ -10,7 +10,9 @@ package model;
 public class Fassade {
 
 	public static void main(String[]args) {
-		System.out.println("hi");
-		Spiel spiel = new Spiel();
+
+		Map map = new Map();
+
+		System.out.println(map.istVerbunden(21, 18));
 	}
 }
