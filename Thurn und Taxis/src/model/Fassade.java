@@ -46,10 +46,12 @@ public class Fassade {
         route.printRoute();
         
         System.out.println("---");
+        System.out.println("neue Liste:");
         for( int i=0; i<list.size(); i++ ) {
         	System.out.println(list.get(i).getName());
         }
         
+        System.out.println("Job Done!");
 
     }
 }

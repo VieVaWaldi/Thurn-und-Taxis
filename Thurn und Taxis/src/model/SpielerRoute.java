@@ -53,13 +53,6 @@ public class SpielerRoute {
 		return stadt;
 	}
 	
-	
-	
-	
-	// ######## PRÜFE OB ROUTE SCHON IN LISTE DRIN ####
-	
-	
-	
 	/**
 	 * Prueft ob Route moeglich ist und gibt neue Verbindung zurueck.
 	 * @param stadt von den Handkarten
@@ -111,12 +104,13 @@ public class SpielerRoute {
 	/**
 	 * Gibt eine Liste der in der Route enthaltenen Staedte zurueck.
 	 */
-	public ArrayList<Stadt> routeBeenden() {
+	public <Stadt> ArrayList<Stadt> routeBeenden() {
 		
 		ArrayList<Stadt> list = new ArrayList<Stadt>();
 
-		for( int i=0; i<list.size()-1; i++ ) {
-			list.set(i, staedte.get(i));
+		for( int i=0; i<staedte.size(); i++ ) {
+			list.add((Stadt) staedte.get(i));
+			System.out.println("---durchlauf---");
 		}
 		
 		routeVerwerfen();
