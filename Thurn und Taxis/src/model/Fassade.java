@@ -9,10 +9,40 @@ package model;
  */
 public class Fassade {
 
-	public static void main(String[]args) {
+    public static void main(String[]args) {
 
-		Map map = new Map();
+        Deck deck = new Deck();
+        Ablage ablage = new Ablage();
+        OffeneKarten ok = new OffeneKarten();
+        
+        HandKarten hk1 = new HandKarten();
+        HandKarten hk2 = new HandKarten();
+        
+        deck.printList();
+        ablage.printList();
+        ok.printList();
+        hk1.printList();
+        hk2.printList();
+        
+        ablage.kartenVerteilen(deck);
 
-		System.out.println(map.istVerbunden(21, 18));
-	}
+        while(!ok.istVoll()) {
+        	ok.karteNachlegen(deck.karteZiehen());
+        }
+        
+        hk1.karteZiehen(deck.karteZiehen());
+        hk1.karteZiehen(deck.karteZiehen());
+        hk1.karteZiehen(deck.karteZiehen());
+        
+        hk2.karteZiehen(ok.karteZiehen(3, deck.karteZiehen()));
+        hk2.karteZiehen(ok.karteZiehen(3, deck.karteZiehen()));
+        hk2.karteZiehen(deck.karteZiehen());
+        
+        deck.printList();
+        ablage.printList();
+        ok.printList();
+        hk1.printList();
+        hk2.printList();
+        ok.printList();
+    }
 }
