@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 // Temporäre main klasse
 
 /**
@@ -11,38 +13,43 @@ public class Fassade {
 
     public static void main(String[]args) {
 
-        Deck deck = new Deck();
-        Ablage ablage = new Ablage();
-        OffeneKarten ok = new OffeneKarten();
+    	Map map = new Map();
+        SpielerRoute route = new SpielerRoute(map);
         
-        HandKarten hk1 = new HandKarten();
-        HandKarten hk2 = new HandKarten();
-        
-        deck.printList();
-        ablage.printList();
-        ok.printList();
-        hk1.printList();
-        hk2.printList();
-        
-        ablage.kartenVerteilen(deck);
+        Provinz p = new Provinz("joh");
+        Stadt s1 = new Stadt("Augsburg", p, 0);
+        Stadt s2 = new Stadt("Innsbruck", p, 6);
+        Stadt s3 = new Stadt("Kempten", p, 7);
+        Stadt s4 = new Stadt("Ulm", p, 19);
+        Stadt s5 = new Stadt("Sigmaringen", p, 17);
 
-        while(!ok.istVoll()) {
-        	ok.karteNachlegen(deck.karteZiehen());
+        Stadt s6 = new Stadt("heil", p, 2);
+        
+        // Liste mit Verbindungen
+        
+        route.routeLegen(s1);
+        route.routeLegen(s6);
+        route.routeLegen(s2);
+        route.routeLegen(s3);
+        route.routeLegen(s4);
+        route.routeLegen(s5);
+        route.routeLegen(s1);
+        route.routeLegen(s1);  
+        route.routeLegen(s1); 
+
+        route.routeLegen(s3);  
+        
+        route.printRoute();
+        
+        ArrayList<Stadt> list = route.routeBeenden();
+        
+        route.printRoute();
+        
+        System.out.println("---");
+        for( int i=0; i<list.size(); i++ ) {
+        	System.out.println(list.get(i).getName());
         }
         
-        hk1.karteZiehen(deck.karteZiehen());
-        hk1.karteZiehen(deck.karteZiehen());
-        hk1.karteZiehen(deck.karteZiehen());
-        
-        hk2.karteZiehen(ok.karteZiehen(3, deck.karteZiehen()));
-        hk2.karteZiehen(ok.karteZiehen(3, deck.karteZiehen()));
-        hk2.karteZiehen(deck.karteZiehen());
-        
-        deck.printList();
-        ablage.printList();
-        ok.printList();
-        hk1.printList();
-        hk2.printList();
-        ok.printList();
+
     }
 }
