@@ -2,27 +2,58 @@ package model;
 
 /**
  * Kutschen erhaelt man fortlaufend fuer laengere Routen.
- * Durch das erreichen einer Kutsche erhaelt man Punkte. 
+ * Durch das erreichen einer Kutsche erhaelt man Punkte.
  * <p>
  * Gibt durch das Interface Punkte die erworbenen Punkte zurueck.
- * 
+ *
  * @author Walter
  *
  */
 public class Kutsche implements Punkte {
 
+	private int momentaneKutsche;
 	private int punkte;
-	private int laenge;
-	
-	// ### Man erhält zugang zur nächst höheren Kutsche. Überlege besseren namen ###
-	public void upgrade() {
-		
+
+	Kutsche() {
+		momentaneKutsche = 0;
 	}
-	
+
+	/**
+	 * Anhand der jetzigen groeßten Kutsche sowie der neuen Routenlaenge
+	 * wird geprueft ob, ob der Spieler eine neue Kutsche erhaelt.
+	 * Wenn ein Spieler die 5. Kutsche erreicht wird die letzte Runde gestartet.
+	 * <p>
+	 * Muss nach routeBeenden() aufgerufen werden.
+	 * Nach dieser Methode muss punkteBerechnen() aufgerufen werden.
+	 *
+	 * @param routenLaenge
+	 * @return true wenn die letzte Kutsche erreicht wird
+	 */
+	public boolean kutschePruefen( int routenLaenge ) {
+
+		if( routenLaenge > momentaneKutsche ) {
+			if( momentaneKutsche == 0 ) {
+				momentaneKutsche = 3;
+			}
+			else {
+				momentaneKutsche++;
+			}
+			punkte = momentaneKutsche;
+		}
+		else {
+			punkte = 0;
+		}
+
+		if( momentaneKutsche == 7 ) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public int punkteBerechnen() {
-		// TODO Auto-generated method stub
-		return 0;
+		return punkte;
 	}
 
 }
