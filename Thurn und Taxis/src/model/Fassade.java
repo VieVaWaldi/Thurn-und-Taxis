@@ -14,45 +14,72 @@ public class Fassade {
     public static void main(String[]args) {
 
     	Map map = new Map();
-        SpielerRoute route = new SpielerRoute(map);
-        
-        
-        
-        Provinz p = new Provinz("joh");
-        Stadt s1 = new Stadt("Augsburg", p, 0);
-        Stadt s2 = new Stadt("Innsbruck", p, 6);
-        Stadt s3 = new Stadt("Kempten", p, 7);
-        Stadt s4 = new Stadt("Ulm", p, 19);
-        Stadt s5 = new Stadt("Sigmaringen", p, 17);
 
-        Stadt s6 = new Stadt("heil", p, 2);
+    	SpielerRoute route = new SpielerRoute(map);
         
+    	Haeuser haeuser = new Haeuser();
+    	
         // Liste mit Verbindungen
         
-        route.routeLegen(s1);
-        route.routeLegen(s6);
-        route.routeLegen(s2);
-        route.routeLegen(s3);
-        route.routeLegen(s4);
-        route.routeLegen(s5);
-        route.routeLegen(s1);
-        route.routeLegen(s1);  
-        route.routeLegen(s1); 
-        route.routeLegen(s3);  
+        route.routeLegen(map.getStadt(0));
+        route.routeLegen(map.getStadt(5));
+        route.routeLegen(map.getStadt(11));
+        route.routeLegen(map.getStadt(13));
+        route.routeLegen(map.getStadt(8));
+        route.routeLegen(map.getStadt(16));
         
         route.printRoute();
         
         ArrayList<Stadt> list = route.routeBeenden();
         
-        route.printRoute();
         
-        System.out.println("---");
-        System.out.println("neue Liste:");
-        for( int i=0; i<list.size(); i++ ) {
-        	System.out.println(list.get(i).getName());
+        
+        haeuser.haeuserSetzen(list, map.getStadt(0));
+        haeuser.haeuserSetzen(list, map.getStadt(5));
+        haeuser.haeuserSetzen(list, map.getStadt(11));
+        haeuser.haeuserSetzen(list, map.getStadt(13));
+        haeuser.haeuserSetzen(list, map.getStadt(8));
+        haeuser.haeuserSetzen(list, map.getStadt(16));
+        
+        ArrayList<Stadt> list2 = haeuser.haeuserBestaetigen();
+        
+        for( int i=0; i<list2.size(); i++ ) {
+        	System.out.println(list2.get(i));
         }
         
-        System.out.println("Job Done!");
+        System.out.println(haeuser.punkteBerechnen());
+        
+        System.out.println("---------------------");
+        
+        
+        
+        route.routeLegen(map.getStadt(0));
+        route.routeLegen(map.getStadt(6));
+        route.routeLegen(map.getStadt(16));
+        route.routeLegen(map.getStadt(13));
+        route.routeLegen(map.getStadt(15));
+        
+        route.printRoute();
 
+        ArrayList<Stadt> list3 = route.routeBeenden();
+
+        haeuser.haeuserSetzen(list3, map.getStadt(0));
+        haeuser.haeuserSetzen(list3, map.getStadt(6));
+        haeuser.haeuserSetzen(list3, map.getStadt(16));
+        haeuser.haeuserSetzen(list3, map.getStadt(13));
+        haeuser.haeuserSetzen(list3, map.getStadt(15));
+        haeuser.haeuserSetzen(list3, map.getStadt(21));
+        
+        ArrayList<Stadt> list4 = haeuser.haeuserBestaetigen();
+        
+        System.out.println("---Häuser in:");
+        for( int i=0; i<list4.size(); i++ ) {
+        	System.out.println(list4.get(i));
+        }
+        
+        
+        System.out.println("punnkte: " + haeuser.punkteBerechnen());
+        
+        
     }
 }

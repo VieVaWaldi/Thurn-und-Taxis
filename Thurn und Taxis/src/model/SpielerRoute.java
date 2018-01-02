@@ -89,6 +89,7 @@ public class SpielerRoute {
 	}
 
 	public void routeVerwerfen() {
+		
 		anfang = null;
 		ende = null;
 		while(!staedte.isEmpty()) {
@@ -97,7 +98,7 @@ public class SpielerRoute {
 	}
 	
 	/**
-	 * Wir beim beenden der Route aufgerufen. 
+	 * Wird beim beenden der Route aufgerufen. 
 	 * 
 	 * @return ArrayList mit den Städten der Spieler Route
 	 */
@@ -105,7 +106,7 @@ public class SpielerRoute {
 		
 		ArrayList<Stadt> list = new ArrayList<Stadt>();
 
-		for( int i=0; i<staedte.size(); i++ ) {
+		for( int i=0; i<staedte.size(); i++ ) {		// I dont get why its not size()-1
 			list.add((Stadt) staedte.get(i));
 		}
 		
@@ -123,5 +124,6 @@ public class SpielerRoute {
 		for( int i=0; i<staedte.size(); i++ ) {
 			System.out.println(staedte.get(i).getName());
 		}
+		System.out.println("##################");
 	}
 }

@@ -3,7 +3,8 @@ package model;
 /**
  * Liefert Informationen darueber ob Staedte verbunden sind.
  * Speichert auﬂerdem die Staedte- & Provinz-Instanzen.
- * Stellt Staedte und Provinzen fuer alle anderen Klassen zur Verfuegung die sie benoetigen.
+ * Stellt Staedte und Provinzen fuer alle anderen Klassen zur Verfuegung die sie benoetigen,
+ * sodass jede Stadt nicht mehr als 1 mal als Instanz vorkommt.
  *
  * @author Walter
  *
@@ -374,7 +375,7 @@ public class Map {
 	}
 
 	private enum VerIngolstadt {
-		ver1(0), ver2(10), ver3(11), ver4(15), ver5(18), ver6(19);
+		ver1(0), ver2(11), ver3(12), ver4(15), ver5(18), ver6(19);
 
 		private int id;
 
