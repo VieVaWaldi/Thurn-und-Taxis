@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Bruacht zum initialisieren die Map um zu pruefen ob Routen realisierbar sind.
+ * Braucht zum initialisieren die Map um zu pruefen ob Routen realisierbar sind.
  * Speichert und verwaltet die aktuelle Route des Spielers.
  * Arbeitet intern mit den Staedte-ID´S.
  * 
@@ -96,13 +96,10 @@ public class SpielerRoute {
 		}
 	}
 	
-	
-	
-	
-	// ### List kann noch nicht zurück gegeben werden ######################## //
-	
 	/**
-	 * Gibt eine Liste der in der Route enthaltenen Staedte zurueck.
+	 * Wir beim beenden der Route aufgerufen. 
+	 * 
+	 * @return ArrayList mit den Städten der Spieler Route
 	 */
 	public <Stadt> ArrayList<Stadt> routeBeenden() {
 		
@@ -110,7 +107,6 @@ public class SpielerRoute {
 
 		for( int i=0; i<staedte.size(); i++ ) {
 			list.add((Stadt) staedte.get(i));
-			System.out.println("---durchlauf---");
 		}
 		
 		routeVerwerfen();

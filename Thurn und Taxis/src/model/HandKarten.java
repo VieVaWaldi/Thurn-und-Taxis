@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Die nur jeweiligen Handkarten der Spieler. Wenn verwendet wandern sie zur Ablage.
+ * Die jeweiligen Handkarten der Spieler. Wenn verwendet wandern sie zur Ablage.
  * <p>
  * Karten duerfen nur über karteZiehen() in die Liste handkarten gelangen.
  * Karten duerfen nur ueber karteAblegen() die List handkarten verlassen.
@@ -13,19 +13,19 @@ import java.util.ArrayList;
  */
 public class HandKarten {
 
-	private ArrayList<Stadt> handkarten;
+	private ArrayList<Karte> handkarten;
 	
 	private final int MAX_ANZAHL_KARTEN = 6;
 	
 	public HandKarten() {
-		handkarten = new ArrayList<Stadt>();
+		handkarten = new ArrayList<Karte>();
 	}
 	
 	/**
 	 * Nur ueber diese Methode duerfen Karten in diese Liste gelangen.
 	 * Davor muss ueberprueft werden ob handkarten voll ist!.
 	 */
-	public void karteZiehen( Stadt karte ) {
+	public void karteZiehen( Karte karte ) {
 		if(istVoll()) {
 			System.out.println("HandKarten: zu viele Karetn auf der Hand");
 		}
@@ -39,7 +39,7 @@ public class HandKarten {
 	 * Benutzte Karten werden zu Routen & dannach abgelegt.
 	 * Bevor diese Methode aufgerufen wird muss geprueft werden ob die Route gebaut werden kann.
 	 */
-	public Stadt karteAblegen( int idx ) {
+	public Karte karteAblegen( int idx ) {
 		if(istLeer()) {
 			System.out.println("HandKarten: Keine Karten auf der Hand");
 		}
@@ -59,7 +59,7 @@ public class HandKarten {
 		int counter = 0;
 		System.out.println("###HandKarten###");
 		for( int i=0; i<handkarten.size(); i++) {
-			System.out.println(handkarten.get(i).getName() + " " + counter++ );
+			System.out.println(handkarten.get(i).getStadt() + " #" + counter++ );
 		}
 		System.out.println("###HandKarten Ende###");
 	}

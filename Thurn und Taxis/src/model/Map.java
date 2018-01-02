@@ -1,8 +1,9 @@
 package model;
 
 /**
- * Liefert Informationen darueber ob Staedte verbunden werden sind.
+ * Liefert Informationen darueber ob Staedte verbunden sind.
  * Speichert außerdem die Staedte- & Provinz-Instanzen.
+ * Stellt Staedte und Provinzen fuer alle anderen Klassen zur Verfuegung die sie benoetigen.
  *
  * @author Walter
  *
@@ -42,6 +43,16 @@ public class Map {
 		return routenMatrix[idStadt1][idStadt2];
 	}
 
+	/**
+	 * Ueber diese Methode bekommen alle andere Klassen
+	 * die gleiche Instanz einer Stadt.
+	 * @param id ( ID´s fangen bei 0 an ;) )
+	 * @return Stadt
+	 */
+	public Stadt getStadt( int id ) {
+		return staedte[id];
+	}
+
 	private void initProvinzen() {
 
 		int iter=0;
@@ -53,23 +64,24 @@ public class Map {
 	}
 
 	/**
-	 * Staedte werden der Provinz nach im Array abgespeichert.
 	 * Erst aufrufen nach dem Provinzen inititalisiert wurden.
-	 * Id wird hier erzeugt und zugeteilt.
+	 * Staedte werden der ID nach in staedte[] gespeichert.
 	 */
 	private void initStaedte() {
 
-		int id = 0;
+		int iter = 0;
 
 		for( StaedteEnum stadtEnum : StaedteEnum.values() ) {
 			Provinz prov = sucheNachProvinz(stadtEnum.getProvinzEnum());
-			Stadt neueStadt = new Stadt(stadtEnum.getNameEnum(), prov, id++ );
+			Stadt neueStadt = new Stadt(stadtEnum.getNameEnum(), prov, stadtEnum.getID());
+			staedte[iter++] = neueStadt;
 		}
 
 	}
 
 	/**
-	 * Helferfunktion. Sucht in provinzen[] nach der richtigen Provinz um sie den Staedten hinzuzufuegen.
+	 * Helferfunktion. Sucht in provinzen[] nach der richtigen Provinz,
+	 * anhand des Namens um sie den Staedten hinzuzufuegen.
 	 *
 	 * @param prov
 	 * @return Provinz
@@ -86,7 +98,7 @@ public class Map {
 	}
 
 	/**
-	 * Die RoutenMatrix wird mit Hilfe der vordefnierten Enums gefüllt.
+	 * Die RoutenMatrix wird mit Hilfe der vordefinierten Enums gefüllt.
 	 * Die Matrix wird mit false auf jeder Stelle intitialisiert.
 	 * Wenn eine Verbindung besteht wird true in die Matrix geschrieben.
 	 */
@@ -213,35 +225,37 @@ public class Map {
 	}
 
 	private enum StaedteEnum{
-		Augsburg("Augsburg","Baiern"),
-		Basel("Basel","Schweiz"),
-		Budweis("Budweis","Boehmen"),
-		Carlsruhe("Carlsruhe","Baden"),
-		Freiburg("Freiburg","Baden"),
-		Ingolstadt("Ingolstadt","Baiern"),
-		Innsbruck("Innsbruck","Tyrol"),
-		Kempten("Kempten","Baiern"),
-		Linz("Linz","Salzburg"),
-		Lodz("Lodz","Polen"),
-		Mannheim("Mannheim","Baden"),
-		Muenchen("Muenchen","Baiern"),
-		Nuernberg("Nuernberg","Baiern"),
-		Passau("Passu","Baiern"),
-		Pilsen("Pilsen","Boehmen"),
-		Regensburg("Regensburg","Baiern"),
-		Salzburg("Salzburg","Salzburg"),
-		Sigamaringen("Sigmaringen","Hohenzollern"),
-		Stuttgart("Stuttgart","Würtemberg"),
-		Ulm("Ulm","Würtemberg"),
-		Wuerzburg("Wuerzburg","Baiern"),
-		Zuerich("Zuerich","Schweiz");
+		Augsburg("Augsburg","Baiern", 0),
+		Basel("Basel","Schweiz", 1),
+		Budweis("Budweis","Boehmen", 2),
+		Carlsruhe("Carlsruhe","Baden", 3),
+		Freiburg("Freiburg","Baden", 4),
+		Ingolstadt("Ingolstadt","Baiern", 5),
+		Innsbruck("Innsbruck","Tyrol", 6),
+		Kempten("Kempten","Baiern", 7),
+		Linz("Linz","Salzburg", 8),
+		Lodz("Lodz","Polen", 9),
+		Mannheim("Mannheim","Baden", 10),
+		Muenchen("Muenchen","Baiern", 11),
+		Nuernberg("Nuernberg","Baiern", 12),
+		Passau("Passau","Baiern", 13),
+		Pilsen("Pilsen","Boehmen", 14),
+		Regensburg("Regensburg","Baiern", 15),
+		Salzburg("Salzburg","Salzburg", 16),
+		Sigamaringen("Sigmaringen","Hohenzollern", 17),
+		Stuttgart("Stuttgart","Würtemberg", 18),
+		Ulm("Ulm","Würtemberg", 19),
+		Wuerzburg("Wuerzburg","Baiern", 20),
+		Zuerich("Zuerich","Schweiz", 21);
 
 		private String stadt;
 		private String prov;
+		private int id;
 
-		StaedteEnum( String stadt, String prov ) {
+		StaedteEnum( String stadt, String prov, int id ) {
 			this.stadt = stadt;
 			this.prov = prov;
+			this.id = id;
 		}
 
 		public String getNameEnum() {
@@ -250,6 +264,10 @@ public class Map {
 
 		public String getProvinzEnum() {
 			return this.prov;
+		}
+
+		public int getID() {
+			return this.id;
 		}
 
 	}
@@ -280,7 +298,7 @@ public class Map {
 	 * Die folgenden Enums haben alle vordefinierte Id`s
 	 * die für die Staedte stehen mit denen sie verbunden sind.
 	 *
-	 * ver sthet für Verbindung.
+	 * ver steht für Verbindung.
 	 *
 	 * @author Walter
 	 *

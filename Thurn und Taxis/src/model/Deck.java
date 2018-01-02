@@ -7,29 +7,31 @@ import java.util.Stack;
  * Hier sind alle verdeckten Karten die der Spieler ziehen kann.
  * <p>
  * Karten duerfen nur über karteNachlegen() in die Liste deck gelangen.
- * Karetn duerfen nur ueber karteZiehen() die List deck verlassen.
+ * Karten duerfen nur ueber karteZiehen() die List deck verlassen.
  * 
  * @author Walter
  *
  */
 public class Deck {
 	
-	private ArrayList<Stadt> deck;
+	private ArrayList<Karte> deck;
 	
 	private final int MAX_ANZAHL_KARTEN = 66;
 	
 	Deck() {
-		deck = new ArrayList<Stadt>();
+		deck = new ArrayList<Karte>();
 	}
 	
 	/**
 	 * Nur über diese Methode werden Karten gezogen.
 	 * Vor dieser Methode muss geprueft werden ob deck leer ist.
-	 * Wenn das der Fall ist muss Ablage zuerst Karten an Deck neu verteilen. 
+	 * Wenn das der Fall ist muss Ablage zuerst Karten an Deck neu verteilen.
+	 * Dann muss Deck wenn die Anfrage von offeneKarten kommt eine Karte
+	 * an offeneKarten verteilen. 
 	 */
-	public Stadt karteZiehen() {
+	public Karte karteZiehen() {
 		if(istLeer()) {
-			System.out.println("Error: Keine Karten in Deck");
+			System.out.println("Error: Keine Karten in Deck");			
 			return null;
 		}
 		
@@ -39,7 +41,7 @@ public class Deck {
 	/**
 	 * Nur über diese Methode darf deck Karten erhalten.
 	 */
-	public boolean karteNachlegen( Stadt karte ) {
+	public boolean karteNachlegen( Karte karte ) {
 		if(istVoll()) {
 			return false;
 		}
@@ -59,7 +61,7 @@ public class Deck {
 		int counter = 0;
 		System.out.println("###Deck###");
 		for( int i=0; i<deck.size(); i++) {
-			System.out.println(deck.get(i).getName() + " " + counter++ );
+			System.out.println(deck.get(i).getStadt() + " #" + counter++ );
 		}
 		System.out.println("###Deck Ende###");
 	}

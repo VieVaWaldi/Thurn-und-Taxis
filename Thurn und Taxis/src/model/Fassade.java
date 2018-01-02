@@ -16,6 +16,8 @@ public class Fassade {
     	Map map = new Map();
         SpielerRoute route = new SpielerRoute(map);
         
+        
+        
         Provinz p = new Provinz("joh");
         Stadt s1 = new Stadt("Augsburg", p, 0);
         Stadt s2 = new Stadt("Innsbruck", p, 6);
@@ -36,7 +38,6 @@ public class Fassade {
         route.routeLegen(s1);
         route.routeLegen(s1);  
         route.routeLegen(s1); 
-
         route.routeLegen(s3);  
         
         route.printRoute();

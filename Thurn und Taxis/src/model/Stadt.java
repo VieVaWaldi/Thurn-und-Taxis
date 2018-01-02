@@ -35,4 +35,8 @@ public class Stadt {
 		return id;
 	}
 	
+	public String toString() {
+		return name + " in " + provinz + " mit ID: " + id;
+	}
+	
 }
