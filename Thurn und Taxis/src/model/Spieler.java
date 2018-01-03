@@ -26,6 +26,6 @@ public class Spieler {
 	
 	private SpielerRoute route;
 	
-	private Stadt[] besuchteStaedte;
+	private Stadt[] gesetzteHaeuser;
 	private Bonusplaettchen[] bonusplaettchen;
 }

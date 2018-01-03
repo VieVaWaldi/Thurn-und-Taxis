@@ -15,24 +15,27 @@ public class Fassade {
 
     	Map map = new Map();
 
-    	SpielerRoute route = new SpielerRoute(map);
-
-    	Kutsche kutsche = new Kutsche();
+    	Spieler s1 = new Spieler();
+    	Spieler s2 = new Spieler();
+   
+    	ProvinzBP bp = new ProvinzBP(map);
     	
-    	kutsche.kutschePruefen(3);
-    	System.out.println(kutsche.punkteBerechnen());
-    	kutsche.kutschePruefen(4);
-    	System.out.println(kutsche.punkteBerechnen());
-    	kutsche.kutschePruefen(5);
-    	System.out.println(kutsche.punkteBerechnen());
-    	kutsche.kutschePruefen(5);
-    	System.out.println(kutsche.punkteBerechnen());
-    	kutsche.kutschePruefen(3);
-    	System.out.println(kutsche.punkteBerechnen());
-    	System.out.println(kutsche.kutschePruefen(6));
-    	System.out.println(kutsche.punkteBerechnen());
-    	System.out.println(kutsche.kutschePruefen(7));
-    	System.out.println(kutsche.punkteBerechnen());
+    	ArrayList<Stadt> list = new ArrayList<>();
     	
+    	list.add(map.getStadt(3));
+    	list.add(map.getStadt(4));
+    	list.add(map.getStadt(10));
+    	list.add(map.getStadt(11));
+    	list.add(map.getStadt(12));
+    	list.add(map.getStadt(8));
+    	
+    	bp.pruefeBedingung(list, s1);
+    	System.out.println(bp.punkteBerechnen());
+    	
+    	bp.pruefeBedingung(list, s2);
+    	System.out.println(bp.punkteBerechnen());
+    
+    	bp.pruefeBedingung(list, s1);
+    	System.out.println(bp.punkteBerechnen());
     }
 }

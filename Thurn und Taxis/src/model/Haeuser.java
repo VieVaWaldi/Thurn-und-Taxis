@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Haeuser implements Punkte {
 
+	ArrayList<Stadt> gesetzteHaeuser;
 	ArrayList<Stadt> zuSetzendeHaeuser;
 
 	private int anzahlVerbleibenderHaeuser;
@@ -20,6 +21,7 @@ public class Haeuser implements Punkte {
 	private int punkte;
 
 	Haeuser() {
+		gesetzteHaeuser = new ArrayList<Stadt>();
 		zuSetzendeHaeuser = new ArrayList<Stadt>();
 		anzahlVerbleibenderHaeuser = 20;
 		maxAnzahlMöglicherHaeuser = 0;
@@ -50,6 +52,10 @@ public class Haeuser implements Punkte {
 		if( zuSetzendeHaeuser.contains(stadt)) {
 			System.out.println("Haeuser: Stadt wurde bereits ausgewaehlt.");
 			return false;
+		}
+		
+		if( gesetzteHaeuser.contains(stadt)) {
+			System.out.println("Haeuser: Hier stehtt bereits ein Haus");
 		}
 
 		if( zuSetzendeHaeuser.isEmpty() ) {
@@ -151,8 +157,15 @@ public class Haeuser implements Punkte {
 		}
 		return true;
 	}
-
 	
+	
+	// #### Besuchte Häuser müssen hier drinnen sein
+
+	/**
+	 * Die gesetzten Haeuser werden gespeichert
+	 * 
+	 * @return ArrayList<Stadt> mit den gesetzten Haeusern
+	 */
 	public <Stadt> ArrayList<Stadt> haeuserBestaetigen() {
 
 		punkte = zuSetzendeHaeuser.size();

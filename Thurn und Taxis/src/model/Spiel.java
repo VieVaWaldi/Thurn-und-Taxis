@@ -15,7 +15,7 @@ public class Spiel {
 	private Spieler[] spieler;
 	
 	private RoutenBP[] routenBP;
-	private StadtBP[] stadtBP;
+	private AlleProvinzenBP[] stadtBP;
 	private ProvinzBP[] provinzBP;
 	
 	Spiel() {

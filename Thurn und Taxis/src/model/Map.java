@@ -53,6 +53,14 @@ public class Map {
 	public Stadt getStadt( int id ) {
 		return staedte[id];
 	}
+	
+	public Provinz getProvinz( int id ) {
+		return provinzen[id];
+	}
+	
+	public int getAnzahlProvinzen() {
+		return ANZAHL_PROVINZEN;
+	}
 
 	private void initProvinzen() {
 
