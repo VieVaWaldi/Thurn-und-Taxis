@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
  * Repraesentiert den Spieler. Der Spieler vereinigt alle Informationen
  * und Instanzendie den Spieler ausmachen.
  * <p>
- * Der Spieler erh‰‰lt Karten vom Spiel ueber Deck oder OffeneKarten.
+ * Der Spieler erhaelt Karten vom Spiel ueber Deck oder OffeneKarten.
  * Der Spieler gibt ueber seine HandKarten karten an die Ablage im Spiel.
  *
  *
@@ -25,8 +25,9 @@ public class Spieler {
 	private Image icon;
 
 	private int punkte;
+	private ArrayList<Stadt> beendeteRoute;
 	private Haeuser haeuser;
-	private ArrayList<Stadt> routeFuerHaeuser;
+	private Bonusplaettchen bonusplaettchen;
 	private Kutsche kutsche;
 
 	private HandKarten handkarten;
@@ -40,7 +41,7 @@ public class Spieler {
 	 * @param icon
 	 * @param map
 	 */
-	Spieler( String name, int spielerNr, String farbe, Image icon, Map map ) {
+	Spieler( Map map, Bonusplaettchen bonusplaettchen, String name, int spielerNr, String farbe, Image icon ) {
 
 		this.name = name;
 		this.spielerNr = spielerNr;
@@ -48,8 +49,9 @@ public class Spieler {
 		this.icon = icon;
 
 		punkte = 0;
+		beendeteRoute = new ArrayList<Stadt>();
 		haeuser = new Haeuser();
-		routeFuerHaeuser = new ArrayList<Stadt>();
+		this.bonusplaettchen = bonusplaettchen;
 		kutsche = new Kutsche();
 		handkarten = new HandKarten();
 		route = new SpielerRoute(map);
@@ -102,11 +104,11 @@ public class Spieler {
 
 		if( route.routeKannBeendetWerden() ) {
 
-			for( int i=0; i< routeFuerHaeuser.size(); i++) {
-				routeFuerHaeuser.remove(i);
+			for( int i=0; i< beendeteRoute.size(); i++) {
+				beendeteRoute.remove(i);
 			}
 
-			routeFuerHaeuser = route.routeBeenden();
+			beendeteRoute = route.routeBeenden();
 
 			return true;
 		}
@@ -122,7 +124,7 @@ public class Spieler {
 	 */
 	public boolean haeuserSetzen( Stadt stadt ) {
 
-		return haeuser.haeuserSetzen(routeFuerHaeuser, stadt);
+		return haeuser.haeuserSetzen(beendeteRoute, stadt);
 	}
 
 	/**
@@ -146,21 +148,27 @@ public class Spieler {
 	}
 
 	/**
+	 * Erst nach haeuserBestaetigten() aufrufen.
 	 *
 	 */
 	public void bonusPlaettchenSammelm() {
 
+		int routenLaenge = beendeteRoute.size();
+		
+		punkte += bonusplaettchen.punkteBerechnen(routenLaenge, beendeteRoute, this);
 	}
 
+	/**
+	 * Erst nach bonusPlaettchenSammeln() aufrufen.
+	 */
 	public void kutscheErhalten() {
 
+		int routenLaenge = beendeteRoute.size();
+		
+		kutsche.kutschePruefen(routenLaenge);
+		
+		punkte += kutsche.punkteBerechnen();
 	}
-
-
-
-
-
-
 
 	/**
 	 * Diese Methode wird am Ende des Spielzuges aufgerufen.
@@ -183,18 +191,4 @@ public class Spieler {
 		return handkarten.mehrAlsDreiKarten();
 	}
 
-	/**
-	 * Nur diese Punkte Methode wird vom Spiel selber aufgerufen.
-	 * Muss am Ende des Zuges aufgerufen werden.
-	 * Gibt 0 Punkte zurueck wenn keine verdient worden sind.
-	 *
-	 * @param bpPunkte
-	 */
-	public void punkteBerechnen( int bpPunkte ) {
-
-		//haeuser.
-		punkte += haeuser.punkteBerechnen();
-		punkte += kutsche.punkteBerechnen();
-
-	}
 }

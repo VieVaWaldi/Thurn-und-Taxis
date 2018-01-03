@@ -159,6 +159,7 @@ public class Haeuser implements Punkte {
     }
 
     /**
+     * Nach dieser Methode muss punkteBerechnen() aufgerufen werden.
      * Die gesetzten Haeuser werden intern gespeichert.
      */
     public void haeuserBestaetigen() {
@@ -166,11 +167,10 @@ public class Haeuser implements Punkte {
         punkte = zuSetzendeHaeuser.size();
 
         while( !zuSetzendeHaeuser.isEmpty() ) {
-        	gesetzteHaeuser.add( zuSetzendeHaeuser.get( zuSetzendeHaeuser.size()-1) );
+        	gesetzteHaeuser.add( zuSetzendeHaeuser.remove( zuSetzendeHaeuser.size()-1) );
         }
 
         maxAnzahlMöglicherHaeuser = 0;
-
     }
 
     /**
