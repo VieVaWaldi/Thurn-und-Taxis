@@ -10,9 +10,11 @@ import java.util.List;
  * @author Walter
  *
  */
-public class ProvinzBP extends Bonusplaettchen {
+public class ProvinzBP implements Punkte {
 
 	private Map map;
+	
+	private int punkte;
 	
 	private int AUFRUFANZAHL_BADEN;
 	private int AUFRUFANZAHL_SCHWEIZUNDTYROL;
@@ -133,7 +135,7 @@ public class ProvinzBP extends Bonusplaettchen {
 		
 	}
 	
-	public void pruefeBaden( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
+	private void pruefeBaden( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
 		
 		int counter = 0;
 		
@@ -150,7 +152,7 @@ public class ProvinzBP extends Bonusplaettchen {
 		}		
 	}	
 
-	public void pruefeSchweizUndTyrol( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
+	private void pruefeSchweizUndTyrol( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
 		
 		int counter = 0;
 		
@@ -167,7 +169,7 @@ public class ProvinzBP extends Bonusplaettchen {
 		}		
 	}
 	
-	public void pruefeWuerttembergUndHohenzollen( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
+	private void pruefeWuerttembergUndHohenzollen( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
 		
 		int counter = 0;
 		
@@ -184,7 +186,7 @@ public class ProvinzBP extends Bonusplaettchen {
 		}		
 	}
 
-	public void pruefeBoehmenUndSalzburg( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
+	private void pruefeBoehmenUndSalzburg( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
 		
 		int counter = 0;
 		
@@ -201,7 +203,7 @@ public class ProvinzBP extends Bonusplaettchen {
 		}		
 	}
 	
-	public void pruefeBaiern( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
+	private void pruefeBaiern( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
 		
 		int counter = 0;
 		

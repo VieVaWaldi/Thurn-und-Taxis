@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Vererbt wird nur die Methode punkteBerechnen().
  *

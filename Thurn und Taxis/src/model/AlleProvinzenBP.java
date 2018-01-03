@@ -10,10 +10,11 @@ import java.util.Set;
  * @author Walter
  *
  */
-public class AlleProvinzenBP extends Bonusplaettchen {
+public class AlleProvinzenBP implements Punkte {
 
 	private Map map;
 	
+	private int punkte;
 	private int AUFRUFANZAHL;
 	private ArrayList<Provinz> benoetigteProvinzen;
 	private ArrayList<Spieler> spielerHatBP;

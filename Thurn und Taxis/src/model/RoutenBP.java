@@ -6,10 +6,10 @@ package model;
  * @author Walter
  *
  */
-public class RoutenBP extends Bonusplaettchen {
+public class RoutenBP implements Punkte {
 
-	//protected int punkte;
-	//protected String beschreibung;
+	private int punkte;
+	private String beschreibung;
 
 	private int AUFRUFZAHL_LAENGE_5;
 	private int AUFRUFZAHL_LAENGE_6;

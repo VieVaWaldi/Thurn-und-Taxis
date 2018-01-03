@@ -18,7 +18,7 @@ public class Fassade {
     	Spieler s1 = new Spieler();
     	Spieler s2 = new Spieler();
    
-    	ProvinzBP bp = new ProvinzBP(map);
+    	Bonusplaettchen bp = new Bonusplaettchen(map); 
     	
     	ArrayList<Stadt> list = new ArrayList<>();
     	
@@ -29,13 +29,9 @@ public class Fassade {
     	list.add(map.getStadt(12));
     	list.add(map.getStadt(8));
     	
-    	bp.pruefeBedingung(list, s1);
-    	System.out.println(bp.punkteBerechnen());
-    	
-    	bp.pruefeBedingung(list, s2);
-    	System.out.println(bp.punkteBerechnen());
-    
-    	bp.pruefeBedingung(list, s1);
-    	System.out.println(bp.punkteBerechnen());
+	    System.out.println( "hi" +bp.punkteBerechnen(list.size(), list, s1) );
+	    System.out.println( "hi" +bp.punkteBerechnen(list.size(), list, s2) );
+	    System.out.println( "hi" +bp.punkteBerechnen(list.size(), list, s1) );
+	    
     }
 }
