@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Spiel speichert alle alle offenen Instanzen.
  * 
@@ -8,17 +10,18 @@ package model;
  */
 public class Spiel {
 	
+	private ArrayList<Spieler> spieler;
+	private Spielzug spielzug;
+	
 	private Deck deck;
 	private Ablage ablage;
 	private OffeneKarten offeneKarten;
 	
-	private Spieler[] spieler;
-	
-	private RoutenBP[] routenBP;
-	private AlleProvinzenBP[] stadtBP;
-	private ProvinzBP[] provinzBP;
+	private Bonusplaettchen bonusPlaettchen;
 	
 	Spiel() {
+		
+		
 		
 	}
 

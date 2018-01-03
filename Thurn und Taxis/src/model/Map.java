@@ -21,6 +21,7 @@ public class Map {
 	/**
 	 * Initialisiert die Provinzen & Staedte. Provinzen muessen zuerst initialisiert werden
 	 * weil sie in Staedten verwendet werden. Dananch wird die Matrix inititialisiert um Verbindungen anzuzeigen.
+	 * Es gibt im ganzen Spiel nur eine Map-Instanz.
 	 */
 	Map() {
 		provinzen = new Provinz[ANZAHL_PROVINZEN];
@@ -53,11 +54,11 @@ public class Map {
 	public Stadt getStadt( int id ) {
 		return staedte[id];
 	}
-	
+
 	public Provinz getProvinz( int id ) {
 		return provinzen[id];
 	}
-	
+
 	public int getAnzahlProvinzen() {
 		return ANZAHL_PROVINZEN;
 	}

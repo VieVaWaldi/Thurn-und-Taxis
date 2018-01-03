@@ -23,6 +23,7 @@ public class Ablage {
 
 	/**
 	 * Muss von den KartenKlassen als letzte initialisiert werden, da sie die anderen fuellt.
+	 * Erzeugt mit Map zu Beginn des Spiels die Karten.
 	 */
 	Ablage( Map map ) {
 		this.map = map;
@@ -84,9 +85,5 @@ public class Ablage {
 			System.out.println(ablage.get(i).getStadt() + " #" + counter++ );
 		}
 		System.out.println("###Ablage Ende###");
-	}
-	
-	public Karte getKarte( int idx ) {
-		return ablage.get(idx);
 	}
 }

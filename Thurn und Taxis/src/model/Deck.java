@@ -24,14 +24,14 @@ public class Deck {
 	
 	/**
 	 * Nur über diese Methode werden Karten gezogen.
-	 * Vor dieser Methode muss geprueft werden ob deck leer ist.
+	 * <p>
+	 * Vor dieser Methode muss mit deckIstLeer() geprueft werden ob Deck leer ist.
 	 * Wenn das der Fall ist muss Ablage zuerst Karten an Deck neu verteilen.
-	 * Dann muss Deck wenn die Anfrage von offeneKarten kommt eine Karte
-	 * an offeneKarten verteilen. 
 	 */
 	public Karte karteZiehen() {
+		
 		if(istLeer()) {
-			System.out.println("Error: Keine Karten in Deck");			
+			System.out.println("Error: Keine Karten im Deck");			
 			return null;
 		}
 		
@@ -53,6 +53,12 @@ public class Deck {
 		return deck.size() == MAX_ANZAHL_KARTEN;
 	}
 	
+	/**
+	 * Muss vor karteZiehen() geprueft werden.
+	 * Wenn true muessen erst Karten von Ablage geholt werden bis Ablage leer ist.
+	 * 
+	 * @return
+	 */
 	public boolean istLeer() {
 		return deck.size() == 0;
 	}	

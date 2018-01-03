@@ -13,195 +13,187 @@ import java.util.ArrayList;
  */
 public class Haeuser implements Punkte {
 
-	ArrayList<Stadt> gesetzteHaeuser;
-	ArrayList<Stadt> zuSetzendeHaeuser;
+    private ArrayList<Stadt> gesetzteHaeuser;
+    private ArrayList<Stadt> zuSetzendeHaeuser;
 
-	private int anzahlVerbleibenderHaeuser;
-	private int maxAnzahlMöglicherHaeuser;
-	private int punkte;
+    private int anzahlVerbleibenderHaeuser;
+    private int maxAnzahlMöglicherHaeuser;
+    private int punkte;
 
-	Haeuser() {
-		gesetzteHaeuser = new ArrayList<Stadt>();
-		zuSetzendeHaeuser = new ArrayList<Stadt>();
-		anzahlVerbleibenderHaeuser = 20;
-		maxAnzahlMöglicherHaeuser = 0;
-		punkte = 0;
-	}
+    Haeuser() {
+        gesetzteHaeuser = new ArrayList<Stadt>();
+        zuSetzendeHaeuser = new ArrayList<Stadt>();
+        anzahlVerbleibenderHaeuser = 20;
+        maxAnzahlMöglicherHaeuser = 0;
+        punkte = 0;
+    }
 
-	/**
-	 * Sobald keine Haeuser mehr gesetzt werden koennen darf der Spieler entscheiden,
-	 * ob er seine Haeuser nochmal setzten moechte oder fertig ist.
-	 * Wenn der Spieler keine Haueser mehr hat muss die final Runde eingeleitet werden.
-	 *
-	 * @param staedte kommt als ArrayList von SpielerRoute
-	 * @param stadt ist die vom Spieler ausgewaehlte Stadt
-	 * @return boolean gibt solange false zurueck bis keine Hauser mehr gesetzt werden koennen
-	 */
-	public boolean haeuserSetzen( ArrayList<Stadt> staedte, Stadt stadt ) {
+    /**
+     * Sobald keine Haeuser mehr gesetzt werden koennen darf der Spieler entscheiden,
+     * ob er seine Haeuser nochmal setzten moechte oder fertig ist.
+     * Wenn der Spieler keine Haueser mehr hat muss die finale Runde eingeleitet werden.
+     *
+     * @param staedte kommt als ArrayList von SpielerRoute
+     * @param stadt ist die vom Spieler ausgewaehlte Stadt
+     * @return boolean gibt solange false zurueck bis keine Hauser mehr gesetzt werden koennen
+     */
+    public boolean haeuserSetzen( ArrayList<Stadt> staedte, Stadt stadt ) {
 
-		if( anzahlVerbleibenderHaeuser == 0 ) {
-			System.out.println("Haeuser: Keine Hauser mehr vorhanden.");
-			return true;
-		}
-		
-		if( stadtIstNichtTeilderRoute(staedte, stadt) ) {
-			System.out.println("Haeuser: Stadt ist nicht Teil der Route: " + stadt);
-			return false;
-		}
+        if( anzahlVerbleibenderHaeuser == 0 ) {
+            System.out.println("Haeuser: Keine Hauser mehr vorhanden.");
+            return true;
+        }
 
-		if( zuSetzendeHaeuser.contains(stadt)) {
-			System.out.println("Haeuser: Stadt wurde bereits ausgewaehlt.");
-			return false;
-		}
-		
-		if( gesetzteHaeuser.contains(stadt)) {
-			System.out.println("Haeuser: Hier stehtt bereits ein Haus");
-		}
+        if( stadtIstNichtTeilderRoute(staedte, stadt) ) {
+            System.out.println("Haeuser: Stadt ist nicht Teil der Route: " + stadt);
+            return false;
+        }
 
-		if( zuSetzendeHaeuser.isEmpty() ) {
-			zuSetzendeHaeuser.add(stadt);
-			anzahlVerbleibenderHaeuser--;
-			return false;
-		}
+        if( zuSetzendeHaeuser.contains(stadt)) {
+            System.out.println("Haeuser: Stadt wurde bereits ausgewaehlt.");
+            return false;
+        }
 
-		if( stadtIstTeilDerProvinz(stadt) ) {
-			return haeuserSetztenInEinerProvinz( staedte, stadt );
-		}
+        if( gesetzteHaeuser.contains(stadt)) {
+            System.out.println("Haeuser: Hier steht bereits ein Haus");
+        }
 
-		if( stadtIstNichtTeilDerProvinz(stadt) ) {
-			return haeuserSetztenInMehrerenProvinzen( staedte, stadt );
-		}
+        if( zuSetzendeHaeuser.isEmpty() ) {
+            zuSetzendeHaeuser.add(stadt);
+            anzahlVerbleibenderHaeuser--;
+            return false;
+        }
 
-		System.out.println("Haueser: Stadt kann nicht gesetzt werden: " + stadt);
-		return false;
-	}
+        if( stadtIstTeilDerProvinz(stadt) ) {
+            return haeuserSetztenInEinerProvinz( staedte, stadt );
+        }
 
-	private boolean stadtIstNichtTeilderRoute( ArrayList<Stadt> staedte, Stadt stadt ) {
+        if( stadtIstNichtTeilDerProvinz(stadt) ) {
+            return haeuserSetztenInMehrerenProvinzen( staedte, stadt );
+        }
 
-		boolean stadtGehoertNichtZurRoute = true;
+        System.out.println("Haueser: Stadt kann nicht gesetzt werden: " + stadt);
+        return false;
+    }
 
-		if(staedte.contains(stadt)) {
-			stadtGehoertNichtZurRoute = false;
-		}
-	
-		return stadtGehoertNichtZurRoute;
-	}
+    private boolean stadtIstNichtTeilderRoute( ArrayList<Stadt> staedte, Stadt stadt ) {
 
-	/**
-	 * Es muss erst berechnet werden wieviele Hauser maximal gesetzt werden koennen.
-	 * Dann gibt diese Methode solange false zurueck bis die Zahl erreicht ist.
-	 */
-	private boolean haeuserSetztenInEinerProvinz( ArrayList<Stadt> staedte, Stadt stadt ) {
+        boolean stadtGehoertNichtZurRoute = true;
 
-		if( maxAnzahlMöglicherHaeuser == 0 ) {
-			Provinz provinz = zuSetzendeHaeuser.get(0).getProvinz();
+        if(staedte.contains(stadt)) {
+            stadtGehoertNichtZurRoute = false;
+        }
 
-			for( int i=0; i<staedte.size(); i++ ) {
-				if( staedte.get(i).getProvinz() == provinz ) {
-					maxAnzahlMöglicherHaeuser++;
-				}
-			}
-		}
+        return stadtGehoertNichtZurRoute;
+    }
 
-		if( zuSetzendeHaeuser.size() < maxAnzahlMöglicherHaeuser ) {
-			zuSetzendeHaeuser.add(stadt);
-			anzahlVerbleibenderHaeuser--;
-			return false;
-		}
+    /**
+     * Es muss erst berechnet werden wieviele Hauser maximal gesetzt werden koennen.
+     * Dann gibt diese Methode solange false zurueck bis die Zahl erreicht ist.
+     */
+    private boolean haeuserSetztenInEinerProvinz( ArrayList<Stadt> staedte, Stadt stadt ) {
 
-		return true;
-	}
+        if( maxAnzahlMöglicherHaeuser == 0 ) {
+            Provinz provinz = zuSetzendeHaeuser.get(0).getProvinz();
 
-	/**
-	 * Es muss erst berechnet werden wieviele Hauser maximal gesetzt werden koennen.
-	 * Dann gibt diese Methode solange false zurueck bis die Zahl erreicht ist.
-	 */
-	private boolean haeuserSetztenInMehrerenProvinzen( ArrayList<Stadt> staedte, Stadt stadt ) {
+            for( int i=0; i<staedte.size(); i++ ) {
+                if( staedte.get(i).getProvinz() == provinz ) {
+                    maxAnzahlMöglicherHaeuser++;
+                }
+            }
+        }
 
-		if( maxAnzahlMöglicherHaeuser == 0 ) {
-			Provinz provinz = zuSetzendeHaeuser.get(0).getProvinz();
+        if( zuSetzendeHaeuser.size() < maxAnzahlMöglicherHaeuser ) {
+            zuSetzendeHaeuser.add(stadt);
+            anzahlVerbleibenderHaeuser--;
+            return false;
+        }
 
-			for( int i=0; i<staedte.size(); i++ ) {
-				if( staedte.get(i).getProvinz() != provinz ) {
-					maxAnzahlMöglicherHaeuser++;
-				}
-			}
-			maxAnzahlMöglicherHaeuser++;
-		}
+        return true;
+    }
 
-		if( zuSetzendeHaeuser.size() < maxAnzahlMöglicherHaeuser ) {
-			zuSetzendeHaeuser.add(stadt);
-			anzahlVerbleibenderHaeuser--;
-			return false;
-		}
+    /**
+     * Es muss erst berechnet werden wieviele Hauser maximal gesetzt werden koennen.
+     * Dann gibt diese Methode solange false zurueck bis die Zahl erreicht ist.
+     */
+    private boolean haeuserSetztenInMehrerenProvinzen( ArrayList<Stadt> staedte, Stadt stadt ) {
 
-		return true;
-	}
+        if( maxAnzahlMöglicherHaeuser == 0 ) {
+            Provinz provinz = zuSetzendeHaeuser.get(0).getProvinz();
 
-	private boolean stadtIstTeilDerProvinz( Stadt stadt ) {
+            for( int i=0; i<staedte.size(); i++ ) {
+                if( staedte.get(i).getProvinz() != provinz ) {
+                    maxAnzahlMöglicherHaeuser++;
+                }
+            }
+            maxAnzahlMöglicherHaeuser++;
+        }
 
-		for( int i=0; i<zuSetzendeHaeuser.size(); i++ ) {
-			if( zuSetzendeHaeuser.get(i).getProvinz() != stadt.getProvinz()) {
-				return false;
-			}
-		}
-		return true;
-	}
+        if( zuSetzendeHaeuser.size() < maxAnzahlMöglicherHaeuser ) {
+            zuSetzendeHaeuser.add(stadt);
+            anzahlVerbleibenderHaeuser--;
+            return false;
+        }
 
-	private boolean stadtIstNichtTeilDerProvinz( Stadt stadt ) {
+        return true;
+    }
 
-		for( int i=0; i<zuSetzendeHaeuser.size(); i++ ) {
-			if( zuSetzendeHaeuser.get(i).getProvinz() == stadt.getProvinz()) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	
-	// #### Besuchte Häuser müssen hier drinnen sein
+    private boolean stadtIstTeilDerProvinz( Stadt stadt ) {
 
-	/**
-	 * Die gesetzten Haeuser werden gespeichert
-	 * 
-	 * @return ArrayList<Stadt> mit den gesetzten Haeusern
-	 */
-	public <Stadt> ArrayList<Stadt> haeuserBestaetigen() {
+        for( int i=0; i<zuSetzendeHaeuser.size(); i++ ) {
+            if( zuSetzendeHaeuser.get(i).getProvinz() != stadt.getProvinz()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-		punkte = zuSetzendeHaeuser.size();
-		
-		ArrayList<Stadt> list = new ArrayList<Stadt>();
+    private boolean stadtIstNichtTeilDerProvinz( Stadt stadt ) {
 
-		while( !zuSetzendeHaeuser.isEmpty() ) {
-			list.add((Stadt) zuSetzendeHaeuser.remove(zuSetzendeHaeuser.size()-1));
-		}
-		
-		maxAnzahlMöglicherHaeuser = 0;
-		
-		return list;
-	}
+        for( int i=0; i<zuSetzendeHaeuser.size(); i++ ) {
+            if( zuSetzendeHaeuser.get(i).getProvinz() == stadt.getProvinz()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	/**
-	 * Diese Methode ermoeglicht es die Haeuser nocheinmal zu setzen.
-	 * Intern werden dazu alle Variablen zurueckgesetzt.
-	 */
-	public void haeuserZuruecksetzen() {
-		
-		int gesetzteHaeuser = zuSetzendeHaeuser.size();
-		anzahlVerbleibenderHaeuser += gesetzteHaeuser;
-		
-		while( !zuSetzendeHaeuser.isEmpty() ) {
-			zuSetzendeHaeuser.remove(zuSetzendeHaeuser.size()-1);
-		}
-		
-		maxAnzahlMöglicherHaeuser = 0;
-	}
+    /**
+     * Die gesetzten Haeuser werden intern gespeichert.
+     */
+    public void haeuserBestaetigen() {
 
-	/**
-	 * Methode darf erst nach haeuserBestaetigen() aufgerufen werden.
-	 */
-	@Override
-	public int punkteBerechnen() {
-		return punkte;
-	}
+        punkte = zuSetzendeHaeuser.size();
+
+        while( !zuSetzendeHaeuser.isEmpty() ) {
+        	gesetzteHaeuser.add( zuSetzendeHaeuser.get( zuSetzendeHaeuser.size()-1) );
+        }
+
+        maxAnzahlMöglicherHaeuser = 0;
+
+    }
+
+    /**
+     * Diese Methode ermoeglicht es die Haeuser nocheinmal zu setzen.
+     * Intern werden dazu alle Variablen zurueckgesetzt.
+     */
+    public void haeuserZuruecksetzen() {
+
+        int gesetzteHaeuser = zuSetzendeHaeuser.size();
+        anzahlVerbleibenderHaeuser += gesetzteHaeuser;
+
+        while( !zuSetzendeHaeuser.isEmpty() ) {
+            zuSetzendeHaeuser.remove(zuSetzendeHaeuser.size()-1);
+        }
+
+        maxAnzahlMöglicherHaeuser = 0;
+    }
+
+    /**
+     * Methode darf erst nach haeuserBestaetigen() aufgerufen werden.
+     */
+    @Override
+    public int punkteBerechnen() {
+        return punkte;
+    }
 }
