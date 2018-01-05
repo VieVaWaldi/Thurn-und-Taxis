@@ -29,7 +29,7 @@ public class Kutsche implements Punkte {
 	 * @param routenLaenge
 	 * @return true wenn die letzte Kutsche erreicht wird
 	 */
-	public boolean kutschePruefen( int routenLaenge ) {
+	public void kutschePruefen( int routenLaenge ) {
 
 		if( routenLaenge > momentaneKutsche ) {
 			if( momentaneKutsche == 0 ) {
@@ -43,13 +43,16 @@ public class Kutsche implements Punkte {
 		else {
 			punkte = 0;
 		}
-
-		if( momentaneKutsche == 7 ) {
-			return true;
-		}
-
-		return false;
 	}
+
+	/**
+     * Muss als letzte in einer SpielRunde aufgerufen werden.
+     *
+     * @return boolean Spiel wird beendet
+     */
+    public boolean letzteRundeErreicht() {
+    	return momentaneKutsche == 7;
+    }
 
 	@Override
 	public int punkteBerechnen() {

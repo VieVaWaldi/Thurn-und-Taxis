@@ -139,15 +139,15 @@ public class SpielerRoute {
 			return null;
 		}
 
-		ArrayList<Stadt> list = new ArrayList<Stadt>();
+		ArrayList<Stadt> beendeteRoute = new ArrayList<Stadt>();
 
-		for( int i=0; i<staedte.size(); i++ ) {		// I dont get why its not size()-1
-			list.add((Stadt) staedte.get(i));
+		for( int i=0; i<staedte.size(); i++ ) {		
+			beendeteRoute.add((Stadt) staedte.get(i));
 		}
 
 		routeVerwerfen();
 
-		return list;
+		return beendeteRoute;
 	}
 	
 	/**

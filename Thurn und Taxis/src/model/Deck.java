@@ -31,7 +31,7 @@ public class Deck {
 	public Karte karteZiehen() {
 		
 		if(istLeer()) {
-			System.out.println("Error: Keine Karten im Deck");			
+			System.out.println("Deck: Keine Karten im Deck. Verteile Karten erneut!");			
 			return null;
 		}
 		

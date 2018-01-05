@@ -8,14 +8,12 @@ import javafx.scene.image.Image;
 
 /**
  * Repraesentiert den Spieler. Der Spieler vereinigt alle Informationen
- * und Instanzendie den Spieler ausmachen.
+ * und Instanzen die den Spieler ausmachen.
  * <p>
  * Der Spieler erhaelt Karten vom Spiel ueber Deck oder OffeneKarten.
  * Der Spieler gibt ueber seine HandKarten karten an die Ablage im Spiel.
  *
- *
  * @author Walter
- *
  */
 public class Spieler {
 
@@ -29,6 +27,8 @@ public class Spieler {
 	private Haeuser haeuser;
 	private Bonusplaettchen bonusplaettchen;
 	private Kutsche kutsche;
+
+	private boolean letzteRunde;
 
 	private HandKarten handkarten;
 
@@ -49,17 +49,25 @@ public class Spieler {
 		this.icon = icon;
 
 		punkte = 0;
-		beendeteRoute = new ArrayList<Stadt>();
 		haeuser = new Haeuser();
 		this.bonusplaettchen = bonusplaettchen;
 		kutsche = new Kutsche();
+		letzteRunde = false;
 		handkarten = new HandKarten();
 		route = new SpielerRoute(map);
 	}
 
 	// For testing
-	Spieler() {
+	Spieler( Map map, Bonusplaettchen bonusplaettchen) {
 
+		punkte = 0;
+		beendeteRoute = new ArrayList<Stadt>();
+		haeuser = new Haeuser();
+		this.bonusplaettchen = bonusplaettchen;
+		kutsche = new Kutsche();
+		letzteRunde = false;
+		handkarten = new HandKarten();
+		route = new SpielerRoute(map);
 	}
 
 	/**
@@ -73,41 +81,47 @@ public class Spieler {
 	}
 
 	/**
-	 * Stadt wird von den Handkarten ausgewaehlt. Zuerst wird geprueft,
-	 * ob die Route gelegt werden kann. Wenn dem so ist wird die Karte gespielt & abgelegt.
+	 * Stadt wird von den Handkarten ausgewaehlt. Zuerst muss mit
+	 * routeKannGelegtWerden() geprueft werden ob Route gelegt werden kann.
+	 * Wenn dem so ist wird die Karte gespielt & abgelegt.
 	 *
-	 * @param stadt von den Handkarten zum ueberpruefen ob Route moeglich ist
+	 * @param stadtAusHandkarten von den Handkarten zum ueberpruefen ob Route moeglich ist
 	 * @param idx ( = Index ) der Karte vom Spieler in seinen Handkarten
 	 * @return Karte die auf die Ablage kommt
 	 */
-	public Karte routeLegen( Stadt stadt, int idx ) {
+	public Karte routeLegen( int idx ) {
 
-		if( route.routeKannGelegtWerden(stadt)) {
+		route.routeLegen( handkarten.testeObRouteMoeglichIst(idx) );
+		return handkarten.karteAblegen(idx);
 
-			route.routeLegen(stadt);
-			return handkarten.karteAblegen(idx);
-		}
-
-		System.out.println("Spieler: Route kann nicht geleget werden.");
-		return null;
 	}
 
 	/**
+	 * Das muss geprueft werden bevor der Spieler die Route legt.
+	 * 
+	 * @param idx ( = Index ) der Handkarten des Spielers
+	 * @return boolean true wenn die Route gelegt werden kann
+	 */
+	public boolean routeKannGelegtWerden( int idx ) {
+		
+		return route.routeKannGelegtWerden( handkarten.testeObRouteMoeglichIst(idx));		
+	}
+	
+	/**
 	 * Wenn Route beendet werden kann wird die aktuelle Route
 	 * aus Spielerroute geloescht und temporaer in Spieler gespeichert.
-	 * Wenn Route nicht beendet wird, wird sie automatisch pausiert.
+	 * Wenn Route nicht beendet wird, wird sie automatisch pausiert und
+	 * nur die Methoden zuVieleKartenAblegen() und letzteRunde() muessen
+	 * gestartet werden.
 	 *
 	 * @return boolean Route wurde erfolgreich beendet
-	 *
 	 */
 	public boolean routeBeenden() {
 
 		if( route.routeKannBeendetWerden() ) {
 
-			for( int i=0; i< beendeteRoute.size(); i++) {
-				beendeteRoute.remove(i);
-			}
-
+			beendeteRoute = null;
+			
 			beendeteRoute = route.routeBeenden();
 
 			return true;
@@ -124,55 +138,59 @@ public class Spieler {
 	 */
 	public boolean haeuserSetzen( Stadt stadt ) {
 
-		return haeuser.haeuserSetzen(beendeteRoute, stadt);
+		return haeuser.haeuserSetzen( beendeteRoute, stadt);
 	}
 
 	/**
 	 * Erst aufrufen nachdem Route erfolgreich beendet wurde.
-	 * Wenn Haeuser besteatigt wurden wird bonusPlaettchenSammeln() aufgerufen.
-	 * Wenn Haeuser zurueckgesetzt aufgerufen wurde muss haeuserSetzen() nochmal aufgerufen werden.
+	 * Hierbei werden die Punkte automatisch berechnet.
+	 * Wenn Haeuser besteatigt muss wird bonusPlaettchenSammeln() aufgerufen werden.
 	 *
 	 * @param bestaetigt Haeuser koennen gesetzt werden
 	 * @return boolean false wenn Haeuser nochmal gesetzt werden sollen.
 	 */
-	public boolean haeuserBestaetigen( boolean bestaetigt ) {
+	public void haeuserBestaetigen() {
 
-		if( bestaetigt ) {
-			haeuser.haeuserBestaetigen();
-			punkte += haeuser.punkteBerechnen();
-			return true;
-		}
+		haeuser.haeuserBestaetigen();
+		letzteRunde = haeuser.letzteRundeErreicht();
+		punkte += haeuser.punkteBerechnen();
+	}
 
+	/**
+	 * Wenn diese Methode aufgerufen wurde muss haeuserSetzen() nochmal aufgerufen werden.
+	 */
+	public void haeuserZuruecksetzen() {
 		haeuser.haeuserZuruecksetzen();
-		return false;
 	}
 
 	/**
 	 * Erst nach haeuserBestaetigten() aufrufen.
-	 *
+	 * Hierbei werden die Punkte automatisch berechnet.
 	 */
 	public void bonusPlaettchenSammelm() {
 
 		int routenLaenge = beendeteRoute.size();
-		
+
 		punkte += bonusplaettchen.punkteBerechnen(routenLaenge, beendeteRoute, this);
 	}
 
 	/**
 	 * Erst nach bonusPlaettchenSammeln() aufrufen.
+	 * Hierbei werden die Punkte automatisch berechnet.
 	 */
 	public void kutscheErhalten() {
 
 		int routenLaenge = beendeteRoute.size();
-		
+
 		kutsche.kutschePruefen(routenLaenge);
-		
+		letzteRunde = kutsche.letzteRundeErreicht();
+
 		punkte += kutsche.punkteBerechnen();
 	}
 
 	/**
 	 * Diese Methode wird am Ende des Spielzuges aufgerufen.
-	 * Davor muss geprueft werden ob der Spieler mehr als 3 Karten hat.
+	 * Davor muss mit mehrAlsDreiKarten() geprueft werden ob der Spieler mehr als 3 Karten hat.
 	 * Die abgelegte Karte kommt in die Ablage.
 	 *
 	 * @param idx ( = Index ) der Karte des Spielers
@@ -191,4 +209,20 @@ public class Spieler {
 		return handkarten.mehrAlsDreiKarten();
 	}
 
+	/**
+	 * Diese Methode muss als letztes aufgerufen werden.
+	 *
+	 * @return boolean die letzte Runde wurde erreicht
+	 */
+	public boolean letzteRundeErreicht() {
+		return letzteRunde;
+	}
+
+	public void printHandKarten() {
+		handkarten.printList();
+	}
+
+	public String toString() {
+		return name + " #" + spielerNr + " hat " + punkte;
+	}
 }

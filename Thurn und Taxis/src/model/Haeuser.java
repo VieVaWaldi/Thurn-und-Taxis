@@ -20,6 +20,8 @@ public class Haeuser implements Punkte {
     private int maxAnzahlMöglicherHaeuser;
     private int punkte;
 
+    private boolean baueInEinerProvinz;
+
     Haeuser() {
         gesetzteHaeuser = new ArrayList<Stadt>();
         zuSetzendeHaeuser = new ArrayList<Stadt>();
@@ -39,6 +41,14 @@ public class Haeuser implements Punkte {
      */
     public boolean haeuserSetzen( ArrayList<Stadt> staedte, Stadt stadt ) {
 
+    	// Wie bestimmen wir das alle Haeuser nach dem 2. nach dem gleichem Schema
+    	// 		gesetzt werden? Also das wir uns mit dem setzen des 2. Hauses fuer
+    	// 		eine oder mehrere Provinzen entscheiden.
+
+    	//
+
+
+
         if( anzahlVerbleibenderHaeuser == 0 ) {
             System.out.println("Haeuser: Keine Hauser mehr vorhanden.");
             return true;
@@ -56,6 +66,7 @@ public class Haeuser implements Punkte {
 
         if( gesetzteHaeuser.contains(stadt)) {
             System.out.println("Haeuser: Hier steht bereits ein Haus");
+            return false;
         }
 
         if( zuSetzendeHaeuser.isEmpty() ) {
@@ -64,6 +75,18 @@ public class Haeuser implements Punkte {
             return false;
         }
 
+
+
+        if( stadtIstTeilDerProvinz(stadt)) {
+        	baueInEinerProvinz = true;
+        }
+
+        if( stadtIstNichtTeilDerProvinz(stadt)) {
+        	baueInEinerProvinz = false;
+        }
+
+
+
         if( stadtIstTeilDerProvinz(stadt) ) {
             return haeuserSetztenInEinerProvinz( staedte, stadt );
         }
@@ -71,6 +94,9 @@ public class Haeuser implements Punkte {
         if( stadtIstNichtTeilDerProvinz(stadt) ) {
             return haeuserSetztenInMehrerenProvinzen( staedte, stadt );
         }
+
+
+
 
         System.out.println("Haueser: Stadt kann nicht gesetzt werden: " + stadt);
         return false;
@@ -88,13 +114,14 @@ public class Haeuser implements Punkte {
     }
 
     /**
-     * Es muss erst berechnet werden wieviele Hauser maximal gesetzt werden koennen.
+     * Es wird erst berechnet werden wieviele Hauser maximal gesetzt werden koennen.
      * Dann gibt diese Methode solange false zurueck bis die Zahl erreicht ist.
      */
     private boolean haeuserSetztenInEinerProvinz( ArrayList<Stadt> staedte, Stadt stadt ) {
 
-        if( maxAnzahlMöglicherHaeuser == 0 ) {
-            Provinz provinz = zuSetzendeHaeuser.get(0).getProvinz();
+    	Provinz provinz = zuSetzendeHaeuser.get(0).getProvinz();
+
+    	if( maxAnzahlMöglicherHaeuser == 0 ) {
 
             for( int i=0; i<staedte.size(); i++ ) {
                 if( staedte.get(i).getProvinz() == provinz ) {
@@ -113,7 +140,7 @@ public class Haeuser implements Punkte {
     }
 
     /**
-     * Es muss erst berechnet werden wieviele Hauser maximal gesetzt werden koennen.
+     * Es muss erst berechnet werden wieviele Haeuser maximal gesetzt werden koennen.
      * Dann gibt diese Methode solange false zurueck bis die Zahl erreicht ist.
      */
     private boolean haeuserSetztenInMehrerenProvinzen( ArrayList<Stadt> staedte, Stadt stadt ) {
@@ -140,12 +167,11 @@ public class Haeuser implements Punkte {
 
     private boolean stadtIstTeilDerProvinz( Stadt stadt ) {
 
-        for( int i=0; i<zuSetzendeHaeuser.size(); i++ ) {
-            if( zuSetzendeHaeuser.get(i).getProvinz() != stadt.getProvinz()) {
-                return false;
-            }
+        if( zuSetzendeHaeuser.get(0).getProvinz() == stadt.getProvinz()) {
+            return true;
         }
-        return true;
+
+        return false;
     }
 
     private boolean stadtIstNichtTeilDerProvinz( Stadt stadt ) {
@@ -179,14 +205,23 @@ public class Haeuser implements Punkte {
      */
     public void haeuserZuruecksetzen() {
 
-        int gesetzteHaeuser = zuSetzendeHaeuser.size();
-        anzahlVerbleibenderHaeuser += gesetzteHaeuser;
+        int neueHaeuser = zuSetzendeHaeuser.size();
+        anzahlVerbleibenderHaeuser += neueHaeuser;
 
         while( !zuSetzendeHaeuser.isEmpty() ) {
             zuSetzendeHaeuser.remove(zuSetzendeHaeuser.size()-1);
         }
 
         maxAnzahlMöglicherHaeuser = 0;
+    }
+
+    /**
+     * Muss als letzte in einer SpielRunde aufgerufen werden.
+     *
+     * @return boolean Spiel wird beendet
+     */
+    public boolean letzteRundeErreicht() {
+    	return anzahlVerbleibenderHaeuser == 0;
     }
 
     /**
