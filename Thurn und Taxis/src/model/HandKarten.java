@@ -15,7 +15,7 @@ public class HandKarten {
 
 	private ArrayList<Karte> handkarten;
 
-	private final int MAX_ANZAHL_KARTEN = 60;
+	private final int MAX_ANZAHL_KARTEN = 6;
 
 	public HandKarten() {
 		handkarten = new ArrayList<Karte>();
@@ -47,11 +47,11 @@ public class HandKarten {
 
 		return handkarten.remove(idx);
 	}
-	
+
 	/**
 	 * Mit dieser Methode wird die Stadt uebergeben und nicht die Karte entfernt
 	 * damit geprueft werden kann ob die Route gebaut werden kann.
-	 * 
+	 *
 	 * @param idx ( = Index ) der Handkarten
 	 * @return Stadt zum testen der Route
 	 */
@@ -67,6 +67,10 @@ public class HandKarten {
 	 */
 	public boolean mehrAlsDreiKarten() {
 		return handkarten.size() > 3;
+	}
+
+	public boolean hatEineKarte() {
+		return handkarten.size() == 1;
 	}
 
 	public boolean istVoll() {

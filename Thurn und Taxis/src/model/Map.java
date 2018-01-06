@@ -34,6 +34,34 @@ public class Map {
 		initMatrix();
 	}
 
+	//########################## Methoden ##########################//
+
+	private final void initProvinzen() {
+
+		int iter=0;
+
+		for( ProvinzEnum provinz : ProvinzEnum.values() ) {
+			Provinz neueProv = new Provinz(provinz.toString());
+			provinzen[iter++] = neueProv;
+		}
+	}
+
+	/**
+	 * Erst aufrufen nach dem Provinzen inititalisiert wurden.
+	 * Staedte werden der ID nach in staedte[] gespeichert.
+	 */
+	private final void initStaedte() {
+
+		int iter = 0;
+
+		for( StaedteEnum stadtEnum : StaedteEnum.values() ) {
+			Provinz prov = sucheNachProvinz(stadtEnum.getProvinzEnum());
+			Stadt neueStadt = new Stadt(stadtEnum.getNameEnum(), prov, stadtEnum.getID());
+			staedte[iter++] = neueStadt;
+		}
+
+	}
+
 	/**
 	 * Sieht in der Matrix nach ob 2 Staedte verbunden sind.
 	 *
@@ -63,32 +91,6 @@ public class Map {
 		return ANZAHL_PROVINZEN;
 	}
 
-	private void initProvinzen() {
-
-		int iter=0;
-
-		for( ProvinzEnum provinz : ProvinzEnum.values() ) {
-			Provinz neueProv = new Provinz(provinz.toString());
-			provinzen[iter++] = neueProv;
-		}
-	}
-
-	/**
-	 * Erst aufrufen nach dem Provinzen inititalisiert wurden.
-	 * Staedte werden der ID nach in staedte[] gespeichert.
-	 */
-	private void initStaedte() {
-
-		int iter = 0;
-
-		for( StaedteEnum stadtEnum : StaedteEnum.values() ) {
-			Provinz prov = sucheNachProvinz(stadtEnum.getProvinzEnum());
-			Stadt neueStadt = new Stadt(stadtEnum.getNameEnum(), prov, stadtEnum.getID());
-			staedte[iter++] = neueStadt;
-		}
-
-	}
-
 	/**
 	 * Helferfunktion. Sucht in provinzen[] nach der richtigen Provinz,
 	 * anhand des Namens um sie den Staedten hinzuzufuegen.
@@ -112,7 +114,7 @@ public class Map {
 	 * Die Matrix wird mit false auf jeder Stelle intitialisiert.
 	 * Wenn eine Verbindung besteht wird true in die Matrix geschrieben.
 	 */
-	private void initMatrix() {
+	private final void initMatrix() {
 
 		for( int i=0; i<ANZAHL_STAEDTE; i++ ) {
 			for( int j=0; j<ANZAHL_STAEDTE; j++) {
@@ -234,7 +236,10 @@ public class Map {
 
 	}
 
-	private enum StaedteEnum{
+	//########################## Enums ##########################//
+
+	private enum StaedteEnum {
+
 		Augsburg("Augsburg","Baiern", 0),
 		Basel("Basel","Schweiz", 1),
 		Budweis("Budweis","Boehmen", 2),
@@ -283,6 +288,7 @@ public class Map {
 	}
 
 	private enum ProvinzEnum {
+
 		Baden("Baden"),
 		Baiern("Baiern"),
 		Boehmen("Boehmen"),
@@ -608,7 +614,7 @@ public class Map {
 	}
 
 	private enum VerZuerich {
-		ver1(1), ver2(4), ver3(17);
+		ver1(1), ver2(4), ver3(7), ver4(17);
 
 		private int id;
 

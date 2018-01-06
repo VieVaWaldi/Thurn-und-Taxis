@@ -11,7 +11,7 @@ package model;
 public abstract class Amtspersonen {
 
 	protected String name;					// Privates können nicht vererbt werden
-	protected String Beschreibung;
+	protected String beschreibung;
 	protected boolean apGenutzt;
 
 }

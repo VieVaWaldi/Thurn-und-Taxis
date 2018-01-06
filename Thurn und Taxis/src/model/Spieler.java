@@ -7,11 +7,9 @@ import javafx.scene.image.Image;
 // ### lass dir ne schöne beschreibung einfallen ### //
 
 /**
- * Repraesentiert den Spieler. Der Spieler vereinigt alle Informationen
- * und Instanzen die den Spieler ausmachen.
- * <p>
- * Der Spieler erhaelt Karten vom Spiel ueber Deck oder OffeneKarten.
- * Der Spieler gibt ueber seine HandKarten karten an die Ablage im Spiel.
+ * Spieler enthaelt alle Informationen ueber den Spieler und
+ * alle Optionen die er ausfuehren kann ( Außer Amtsmaenner, die sind in Spielzug ).
+ * Soviele alle Informationen und Methoden die Spielzug braucht um mit Spieler zu arbeiten.
  *
  * @author Walter
  */
@@ -57,7 +55,12 @@ public class Spieler {
 		route = new SpielerRoute(map);
 	}
 
-	// For testing
+	/**
+	 * For testing only
+	 *
+	 * @param map
+	 * @param bonusplaettchen
+	 */
 	Spieler( Map map, Bonusplaettchen bonusplaettchen) {
 
 		punkte = 0;
@@ -70,9 +73,14 @@ public class Spieler {
 		route = new SpielerRoute(map);
 	}
 
+	//########################### Phase 1  ###########################//
+
 	/**
-	 * Karte kommt vom den offenen Karten oder vom Deck
+	 * Karte kommt von den offenen Karten oder vom Deck
 	 * und wird den Handkarten des Spielers hinzugefuegt.
+	 * <p>
+	 * Es darf nur eine Karte pro Runde gezogen werden,
+	 * ausser der Postmeister wurde genutzt.
 	 *
 	 * @param karte die gezogen wurde
 	 */
@@ -81,9 +89,23 @@ public class Spieler {
 	}
 
 	/**
+	 * Wenn der Spieler nur eine Karte hat wird der Postmann automatisch genutzt.
+	 *
+	 * @return
+	 */
+	public boolean hatEineKarte() {
+		return handkarten.hatEineKarte();
+	}
+
+	//########################### Phase 1  ###########################//
+
+	/**
 	 * Stadt wird von den Handkarten ausgewaehlt. Zuerst muss mit
 	 * routeKannGelegtWerden() geprueft werden ob Route gelegt werden kann.
 	 * Wenn dem so ist wird die Karte gespielt & abgelegt.
+	 * <p>
+	 * Es darf nur eine Stadt pro Runde gelegt werden,
+	 * ausser der Postillion wurde genutzt.
 	 *
 	 * @param stadtAusHandkarten von den Handkarten zum ueberpruefen ob Route moeglich ist
 	 * @param idx ( = Index ) der Karte vom Spieler in seinen Handkarten
@@ -98,15 +120,17 @@ public class Spieler {
 
 	/**
 	 * Das muss geprueft werden bevor der Spieler die Route legt.
-	 * 
+	 *
 	 * @param idx ( = Index ) der Handkarten des Spielers
 	 * @return boolean true wenn die Route gelegt werden kann
 	 */
 	public boolean routeKannGelegtWerden( int idx ) {
-		
-		return route.routeKannGelegtWerden( handkarten.testeObRouteMoeglichIst(idx));		
+
+		return route.routeKannGelegtWerden( handkarten.testeObRouteMoeglichIst(idx));
 	}
-	
+
+	//########################### Phase 2  ###########################//
+
 	/**
 	 * Wenn Route beendet werden kann wird die aktuelle Route
 	 * aus Spielerroute geloescht und temporaer in Spieler gespeichert.
@@ -114,14 +138,14 @@ public class Spieler {
 	 * nur die Methoden zuVieleKartenAblegen() und letzteRunde() muessen
 	 * gestartet werden.
 	 *
-	 * @return boolean Route wurde erfolgreich beendet
+	 * @return boolean false wenn die Route nicht beendet werden kann
 	 */
 	public boolean routeBeenden() {
 
 		if( route.routeKannBeendetWerden() ) {
 
 			beendeteRoute = null;
-			
+
 			beendeteRoute = route.routeBeenden();
 
 			return true;
@@ -129,6 +153,16 @@ public class Spieler {
 
 		return false;
 	}
+
+	/**
+	 * Wenn der Spieler die Route nicht weiterfuehren moechte oder das nicht kann
+	 * muss die Route automatisch verworfen werden.
+	 */
+	public void routeVerwerfen() {
+		route.routeVerwerfen();
+	}
+
+	//########################### Phase 3  ###########################//
 
 	/**
 	 * Erst aufrufen nach dem Route erfolgreich beendet wurde.
@@ -177,12 +211,15 @@ public class Spieler {
 	/**
 	 * Erst nach bonusPlaettchenSammeln() aufrufen.
 	 * Hierbei werden die Punkte automatisch berechnet.
+	 * <p>
+	 * Wenn der Spieler den Wagner aktiviert braucht er 2 Staedte weniger
+	 * auf die naechste Kutsche.
 	 */
-	public void kutscheErhalten() {
+	public void kutscheErhalten( boolean wagnerGenutzt ) {
 
 		int routenLaenge = beendeteRoute.size();
 
-		kutsche.kutschePruefen(routenLaenge);
+		kutsche.kutschePruefen( routenLaenge, wagnerGenutzt );
 		letzteRunde = kutsche.letzteRundeErreicht();
 
 		punkte += kutsche.punkteBerechnen();
@@ -218,11 +255,21 @@ public class Spieler {
 		return letzteRunde;
 	}
 
+	//########################### Helfer ###########################//
+
 	public void printHandKarten() {
 		handkarten.printList();
 	}
 
 	public String toString() {
 		return name + " #" + spielerNr + " hat " + punkte;
+	}
+
+	/**
+	 * Zum anzeigen der Punkte des Spielers
+	 * @return
+	 */
+	public int getPunkte() {
+		return punkte;
 	}
 }

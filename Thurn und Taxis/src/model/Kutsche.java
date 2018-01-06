@@ -7,7 +7,6 @@ package model;
  * Gibt durch das Interface Punkte die erworbenen Punkte zurueck.
  *
  * @author Walter
- *
  */
 public class Kutsche implements Punkte {
 
@@ -15,7 +14,7 @@ public class Kutsche implements Punkte {
 	private int punkte;
 
 	Kutsche() {
-		momentaneKutsche = 0;
+		momentaneKutsche = 2;
 	}
 
 	/**
@@ -27,17 +26,18 @@ public class Kutsche implements Punkte {
 	 * Nach dieser Methode muss punkteBerechnen() aufgerufen werden.
 	 *
 	 * @param routenLaenge
+	 * @param wagnerGenutzt wird als true uebergeben wenn der Wagner genutzt wurde.
 	 * @return true wenn die letzte Kutsche erreicht wird
 	 */
-	public void kutschePruefen( int routenLaenge ) {
+	public void kutschePruefen( int routenLaenge, boolean wagnerGenutzt ) {
+
+		if( wagnerGenutzt ) {
+			routenLaenge +=2;
+		}
 
 		if( routenLaenge > momentaneKutsche ) {
-			if( momentaneKutsche == 0 ) {
-				momentaneKutsche = 3;
-			}
-			else {
-				momentaneKutsche++;
-			}
+
+			momentaneKutsche++;
 			punkte = momentaneKutsche;
 		}
 		else {

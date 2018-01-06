@@ -32,7 +32,7 @@ public class SpielerRoute {
 	 * @param stadt wird von den Handkarten des Spielers uebergeben
 	 */
 	public void routeLegen( Stadt stadt ) {
-		
+
 		if( !routeKannGelegtWerden(stadt)) {
 			return;
 		}
@@ -116,6 +116,8 @@ public class SpielerRoute {
 
 	/**
 	 * Route wird verworfen. Es werden keine Punkte vergeben.
+	 * Diese Methode kann auch aufgerufen werden wenn routeKannBeenden() false
+	 * zurueck gibt.
 	 */
 	public void routeVerwerfen() {
 
@@ -141,7 +143,7 @@ public class SpielerRoute {
 
 		ArrayList<Stadt> beendeteRoute = new ArrayList<Stadt>();
 
-		for( int i=0; i<staedte.size(); i++ ) {		
+		for( int i=0; i<staedte.size(); i++ ) {
 			beendeteRoute.add((Stadt) staedte.get(i));
 		}
 
@@ -149,21 +151,21 @@ public class SpielerRoute {
 
 		return beendeteRoute;
 	}
-	
+
 	/**
 	 * Muss vor routeBeenden() geprueft werden.
-	 * 
+	 *
 	 * @return boolean Route kann beendet werden
 	 */
 	public boolean routeKannBeendetWerden() {
-		
+
 		if( staedte.size() < 3 ) {
 			System.out.println("SpielerRoute: Route muss zum Beenden min 3 Staedte beinhalten.");
 			return false;
-		} 
-		
+		}
+
 		return true;
-	}	
+	}
 
 	private boolean routeIstLeer() {
 		return staedte.size() == 0;

@@ -11,7 +11,6 @@ import java.util.List;
  * Karten duerfen nur ueber karteZiehen() die List offeneKarten verlassen.
  *
  * @author Walter
- *
  */
 public class OffeneKarten {
 

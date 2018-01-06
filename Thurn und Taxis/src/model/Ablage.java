@@ -54,7 +54,7 @@ public class Ablage {
 
 	/**
 	 * Nur ueber diese Methoden duerfen Karten die Ablage verlassen.
-	 * Mischt die Karten. Verteilt die Karten dann an das Deck wenn Deck leer ist
+	 * Mischt die Karten. Verteilt alle Karten dann an das Deck wenn Deck leer ist
 	 * & zu Beginn dies Spiels.
 	 */
 	public void kartenVerteilen( Deck deck ) {
