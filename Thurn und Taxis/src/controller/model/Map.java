@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 /**
  * Liefert Informationen darueber ob Staedte verbunden sind.

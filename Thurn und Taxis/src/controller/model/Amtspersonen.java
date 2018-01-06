@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 /**
  * Die ElternKlasse für Amtspersonen. Sie ist abstrakt weil keine Instanz benötigt wird.

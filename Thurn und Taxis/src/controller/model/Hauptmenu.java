@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 import javafx.application.Platform;
 import javafx.scene.image.Image;

@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 /**
  * Kutschen erhaelt man fortlaufend fuer laengere Routen.

@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 /**
  * Eine der 4 Amtspersonen.

@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import java.util.Set;
 public class AlleProvinzenBP implements Punkte {
 
 	private Map map;
-	
+
 	private int punkte;
 	private int AUFRUFANZAHL;
 	private ArrayList<Provinz> benoetigteProvinzen;
@@ -21,16 +21,16 @@ public class AlleProvinzenBP implements Punkte {
 
 	AlleProvinzenBP( Map map ) {
 		this.map = map;
-		
+
 		AUFRUFANZAHL = 4;
 		benoetigteProvinzen = new ArrayList<Provinz>();
 		spielerHatBP = new ArrayList<Spieler>();
-		
+
 		initAlleProvinzenBP();
 	}
-	
+
 	private void initAlleProvinzenBP() {
-		
+
 		for( int i=0; i<map.getAnzahlProvinzen(); i++ ) {
 			benoetigteProvinzen.add(map.getProvinz(i));
 		}
@@ -42,25 +42,25 @@ public class AlleProvinzenBP implements Punkte {
 	 * Die unterschiedlichen Provinzen werden durch das Set voneinander getrennt.
 	 * Wenn Bedingung nicht erfuellt ist werden 0 Punkte zurueck gegeben.
 	 * Wenn Spieler eine Kutsche erhaelt wird geprueft ob es dafuer noch Punkte gibt.
-	 * 
+	 *
 	 * @param staedteMitHaeusern enthaelt alle Haeuser des Spielers
 	 */
 	public void pruefeBedingung( ArrayList<Stadt> staedteMitHaeusern, Spieler spieler ) {
-		
+
 		if( spielerHatBP.contains(spieler)) {
 			System.out.println("AlleProvinzenBP: Spieler hat BP bereits.");
 			punkte = 0;
 			return;
 		}
-		
+
 		ArrayList<Provinz> provinzenMitHaeusern = new ArrayList<Provinz>();
-		
+
 		for( int i=0; i<staedteMitHaeusern.size(); i++ ) {
 			provinzenMitHaeusern.add(staedteMitHaeusern.get(i).getProvinz());
 		}
-		
+
 		Set<Provinz> unterschiedlicheProvinzen = new HashSet<Provinz>(provinzenMitHaeusern);
-		
+
 		if( unterschiedlicheProvinzen.size() >= 7 ) {
 			punkte = AUFRUFANZAHL + 2;
 			AUFRUFANZAHL--;

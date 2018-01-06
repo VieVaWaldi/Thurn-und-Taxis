@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 // PHASENN GENAUER BESCHREIBEN
 

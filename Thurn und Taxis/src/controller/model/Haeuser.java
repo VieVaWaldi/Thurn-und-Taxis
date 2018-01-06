@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -77,7 +77,7 @@ public class Haeuser implements Punkte {
         }
 
         return alleWeiterenHaeuserSetzen( spielerRoute, stadt );
-        
+
     }
 
     private boolean erstesHausSetzen( Stadt stadt ) {
@@ -99,7 +99,7 @@ public class Haeuser implements Punkte {
      * @return
      */
     private boolean alleWeiterenHaeuserSetzen( ArrayList<Stadt> spielerRoute, Stadt stadt ) {
-    	
+
     	if( zweitesHausWurdeNichtGesetzt ) {
 
 	    	if( stadt.getProvinz() == zuSetzendeHaeuser.get(0).getProvinz() ) {
@@ -125,7 +125,7 @@ public class Haeuser implements Punkte {
      * Dann wird solange false zurueck gegeben bis alle Haeuser gesetzt worden sind.
      */
     private boolean haeuserSetztenInEinerProvinz( ArrayList<Stadt> spielerRoute, Stadt stadt ) {
-    	
+
     	if( !stadtIstTeilDerProvinz(stadt)) {
     		return false;
     	}
@@ -145,7 +145,7 @@ public class Haeuser implements Punkte {
 
         zuSetzendeHaeuser.add(stadt);
         anzahlVerbleibenderHaeuser--;
-        
+
         if( zuSetzendeHaeuser.size() == maxAnzahlMöglicherHaeuser ) {
         	return true;
         }

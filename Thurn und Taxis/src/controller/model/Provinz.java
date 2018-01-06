@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 public class Provinz {
 
@@ -7,11 +7,11 @@ public class Provinz {
 	Provinz( String name ) {
 		this.name = name;
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public String toString() {
 		return this.name;
 	}

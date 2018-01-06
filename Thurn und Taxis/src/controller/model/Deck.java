@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -8,20 +8,20 @@ import java.util.Stack;
  * <p>
  * Karten duerfen nur über karteNachlegen() in die Liste deck gelangen.
  * Karten duerfen nur ueber karteZiehen() die List deck verlassen.
- * 
+ *
  * @author Walter
  *
  */
 public class Deck {
-	
+
 	private ArrayList<Karte> deck;
-	
+
 	private final int MAX_ANZAHL_KARTEN = 66;
-	
+
 	Deck() {
 		deck = new ArrayList<Karte>();
 	}
-	
+
 	/**
 	 * Nur über diese Methode werden Karten gezogen.
 	 * <p>
@@ -29,15 +29,15 @@ public class Deck {
 	 * Wenn das der Fall ist muss Ablage zuerst Karten an Deck neu verteilen.
 	 */
 	public Karte karteZiehen() {
-		
+
 		if(istLeer()) {
-			System.out.println("Deck: Keine Karten im Deck. Verteile Karten erneut!");			
+			System.out.println("Deck: Keine Karten im Deck. Verteile Karten erneut!");
 			return null;
 		}
-		
-		return deck.remove(deck.size()-1);		
+
+		return deck.remove(deck.size()-1);
 	}
-	
+
 	/**
 	 * Nur über diese Methode darf deck Karten erhalten.
 	 */
@@ -48,21 +48,21 @@ public class Deck {
 		deck.add(karte);
 		return true;
 	}
-	
+
 	public boolean istVoll() {
 		return deck.size() == MAX_ANZAHL_KARTEN;
 	}
-	
+
 	/**
 	 * Muss vor karteZiehen() geprueft werden.
 	 * Wenn true muessen erst Karten von Ablage geholt werden bis Ablage leer ist.
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean istLeer() {
 		return deck.size() == 0;
-	}	
-	
+	}
+
 	public void printList() {
 		int counter = 0;
 		System.out.println("###Deck###");

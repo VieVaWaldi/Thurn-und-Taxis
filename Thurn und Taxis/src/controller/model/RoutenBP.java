@@ -1,4 +1,4 @@
-package model;
+package controller.model;
 
 /**
  * RoutenBP´s erhält man für das erreichen einer bestimmten Routenlänge.
